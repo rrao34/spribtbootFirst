@@ -1,4 +1,4 @@
-package com.springboot.first.SpringBootFirst;
+package com.springboot.first.main;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
