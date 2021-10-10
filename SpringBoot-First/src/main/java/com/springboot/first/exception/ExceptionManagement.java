@@ -2,8 +2,10 @@ package com.springboot.first.exception;
 
 import java.util.Date;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,5 +29,12 @@ public class ExceptionManagement extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<>(
 				new ExceptionBean(new Date(), ex.getMessage(), "Student id existsin records, try with no-id or new id"),
 				HttpStatus.CONFLICT);
+	}
+	
+	@Override
+	protected ResponseEntity<Object> handleMethodArgumentNotValid(
+			MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+
+		return new ResponseEntity<>(new ExceptionBean(new Date(), ex.getBindingResult().toString(), "Field Validation failed"), status.BAD_REQUEST);
 	}
 }

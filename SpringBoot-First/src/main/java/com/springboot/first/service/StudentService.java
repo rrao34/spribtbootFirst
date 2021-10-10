@@ -63,4 +63,18 @@ public class StudentService {
 		}
 
 	}
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public void deleteStudentById(int id) {
+		Optional<StudentBean> student = students.stream().filter(s -> (s.getId() == id)).findFirst();
+		if (student.isPresent()) {
+			students.remove(student.get());
+		} else {
+			throw new RecordNotFoundException("Student's id - '" + id + "' is not found in records");
+		}
+		
+	}
 }
