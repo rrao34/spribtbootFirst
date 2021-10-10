@@ -1,27 +1,23 @@
 package com.springboot.first.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.first.bean.StudentBean;
-import com.springboot.first.exception.RecordNotFoundException;
+import com.springboot.first.service.StudentService;
 
 @RestController
 public class StudentController {
 
-	static List<StudentBean> students = new ArrayList<>();
-
-	static {
-		students.add(new StudentBean(1, "John", "Milano"));
-		students.add(new StudentBean(2, "Marko", "Bologna"));
-		students.add(new StudentBean(3, "Tim", "Verona"));
-
-	}
+	@Autowired
+	StudentService studentService;
+	
 
 	@GetMapping(path = "/")
 	public String getStudentTest() {
@@ -29,17 +25,18 @@ public class StudentController {
 	}
 
 	@GetMapping(path = "/students")
-	public static List<StudentBean> getStudents() {
-		return students;
+	public List<StudentBean> getStudents() {
+		return studentService.getStudents();
 	}
 
 	@GetMapping(path = "/students/{id}")
-	public static StudentBean getStudents(@PathVariable int id) throws RecordNotFoundException {
-		Optional<StudentBean> student = students.stream().filter(s -> (s.getId() == id)).findFirst();
-		if (student.isPresent()) {
-			return student.get();
-		}
-		 throw new RecordNotFoundException("Student not found1");
+	public  StudentBean getStudentById(@PathVariable int id) {
+		return studentService.getStudentById(id);
+	}
+
+	@PostMapping(value="/newstudent")
+	public void addNewStudent(@RequestBody StudentBean newStudent) {
+		studentService.addNewStudent(newStudent);
 	}
 
 }
