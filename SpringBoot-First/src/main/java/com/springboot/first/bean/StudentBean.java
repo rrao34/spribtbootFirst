@@ -1,9 +1,15 @@
 package com.springboot.first.bean;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
+
 public class StudentBean {
 
+	@Min(value=1,message="Id should be greater than 0")
 	private int id;
+	@Size(min=2, message="Name should be 2 characters in length")
 	private String name;
+	
 	private String Address;
 
 	/**
