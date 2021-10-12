@@ -3,8 +3,10 @@ package com.springboot.first.controller;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Links;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +31,9 @@ public class StudentController {
 
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	private MessageSource message;
 	
 
 	@GetMapping(path = "/")
@@ -76,6 +82,12 @@ public class StudentController {
 		RepresentationModel<?> collection = CollectionModel.of(student, links);
 		
 		return collection;
+	}
+	
+	//Internationalization
+	@GetMapping(path = "/helloI18n")
+	public String getWelcomMessage(@RequestHeader(name="Accept-lang", required=false) Locale locale) {
+		return message.getMessage("welcome.student.message", null, locale);
 	}
 
 }
