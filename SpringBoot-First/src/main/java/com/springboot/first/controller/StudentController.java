@@ -51,6 +51,10 @@ public class StudentController {
 		return studentService.getStudentById(id);
 	}
 
+	/** 
+	 * This method will not work if security is enable. CSRF (Cross-Sire Request Forgery) 
+	 need to be disabled/or comment security dependency
+	 */	
 	@PostMapping(value = "/newstudent")
 	public ResponseEntity<Object> addNewStudent(@Validated @RequestBody StudentBean newStudent) {
 		studentService.addNewStudent(newStudent);
@@ -69,7 +73,7 @@ public class StudentController {
 		studentService.deleteStudentById(id);
 	}
 	
-	//HATEOAS
+	//HATEOAS - Hypermedia As The Engine Of Application State
 	@GetMapping(path = "/studentsHATEOAS/{id}")
 	public  RepresentationModel getstudentsHATEOASById(@PathVariable int id) {
 		StudentBean student = studentService.getStudentById(id);
