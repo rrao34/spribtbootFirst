@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.springboot.first.bean.StudentBean;
-import com.springboot.first.service.StudentService;
+import com.springboot.first.service.StudentDaoService;
 
 @RestController
 public class StudentController {
 
 	@Autowired
-	StudentService studentService;
+	StudentDaoService studentService;
 	
 	@Autowired
 	private MessageSource message;

@@ -11,7 +11,7 @@ import com.springboot.first.exception.RecordNotFoundException;
 import com.springboot.first.exception.StudentIdExistsException;
 
 @Component
-public class StudentService {
+public class StudentDaoService {
 
 	static List<StudentBean> students = new ArrayList<>();
 
